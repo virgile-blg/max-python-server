@@ -65,16 +65,19 @@ class OSCServer(object):
 
 
     def predict_callback(self, addr, args=[]):
-        """_summary_
+        """Calls predict() method and send resuts to Max. Keeps only top 5 tags.
 
         Args:
-            addr (_type_): _description_
-            args (_type_): _description_
+            addr (str): Client address to send to
         """
         print('Got predict signal')
         result_dict = self.predictor.predict()
+        # Keep only top 5
+        result_dict = {k: v for k, v in sorted(result_dict.items(), key=lambda item: item[1], reverse=True)[:5]}
+        i=1
         for k, v in result_dict.items():
-            self.send(address=f"/tag/{k}", content=v)
+            self.send(address=f"/tag/{i}", content=f"{k}:{v}")
+            i+=1
         self.send(address="/info", content="prediction done")
 
 if __name__ == "__main__":
