@@ -86,11 +86,11 @@ if __name__ == "__main__":
     parser.add_argument("--ip", default="127.0.0.1", help="The ip to listen on")
     parser.add_argument("--in_port", type=int, default=8001, help="The port to listen on")
     parser.add_argument("--out_port", type=int, default=8000, help="The port to send to")
-    parser.add_argument("--model_folder", type=str, default='models/shortres_msd', help="Path to model folder")
+    parser.add_argument("--model_folder", type=str, default='models/shortres_mtg', help="Path to model folder")
 
     args = parser.parse_args()
     
     # Initialize OSC Client/Server
-    osc_server = OSCServer(in_port=args.in_port, out_port=args.out_port, ip=args.ip)
+    osc_server = OSCServer(in_port=args.in_port, out_port=args.out_port, ip=args.ip, model_folder=args.model_folder)
     osc_server.send("/info", "~~~ Hello from OSC server :) ~~~ ")
     osc_server.run()
