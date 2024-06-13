@@ -27,7 +27,7 @@ class Predictor(object):
         
         # Create model input
         try:
-            x = torch.from_numpy(input_buffer[0:self.input_length]).unsqueeze(0).unsqueeze(0)
+            x = torch.from_numpy(input_buffer[0:self.input_length]).unsqueeze(0)
         except Exception as e:
             print(e)
         
@@ -38,6 +38,6 @@ class Predictor(object):
         # Store results in dict 
         result_dict = {}
         for i, cl in enumerate(self.classes):
-            result_dict[cl] = round(float(out[0][i][0]), 3)
+            result_dict[cl] = round(float(out[0][i]), 3)
         
         return result_dict
