@@ -1,0 +1,18 @@
+FROM python:3.12.2-slim-bookworm
+
+COPY . /app
+
+WORKDIR /app
+
+USER root
+
+RUN apt-get update && apt-get install -y python3-pip
+RUN pip install -r requirements.txt
+
+ENV environment model_folder
+
+EXPOSE 8000
+EXPOSE 8001
+
+# CMD osc_server.py --model_folder models/shortres_mtg
+CMD ["sh", "-c", "python osc_server.py --model_folder ${model_folder}"]
