@@ -21,7 +21,7 @@ class Predictor(object):
         except Exception as e:
             print(e)
         
-    def predict(self, from_file:str='/Users/virgile/Desktop/input_buffer.wav'):
+    def predict(self, from_file:str='/mnt/Desktop/input_buffer.wav'):
         # Load buffer
         input_buffer, _ = librosa.load(from_file, sr=16000, mono=True)
         

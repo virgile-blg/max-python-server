@@ -1,18 +1,21 @@
 FROM python:3.12.2-slim-bookworm
 
-COPY . /app
+USER root
+RUN apt-get update && apt-get install -y python3-pip
+
 
 WORKDIR /app
 
-USER root
+ADD ./requirements.txt /app/requirements.txt
 
-RUN apt-get update && apt-get install -y python3-pip
-RUN pip install -r requirements.txt
+RUN pip install --extra-index-url https://download.pytorch.org/whl/cpu -r requirements.txt
+
+ADD . /app
 
 ENV environment model_folder
 
-EXPOSE 8000
-EXPOSE 8001
+EXPOSE 8000/udp
+EXPOSE 8001/udp
 
 # CMD osc_server.py --model_folder models/shortres_mtg
 CMD ["sh", "-c", "python osc_server.py --model_folder ${model_folder}"]

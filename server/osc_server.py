@@ -1,7 +1,7 @@
 import argparse
 from pythonosc import osc_server, dispatcher, udp_client
 
-from server.inference import Predictor
+from inference import Predictor
 
 class OSCServer(object):
     def __init__(self, in_port:int=8000, out_port:int=8000, ip='127.0.0.1', osc_attributes=[], model_folder='models/shortres_msd',*args) -> None:
@@ -94,3 +94,4 @@ if __name__ == "__main__":
     osc_server = OSCServer(in_port=args.in_port, out_port=args.out_port, ip=args.ip, model_folder=args.model_folder)
     osc_server.send("/info", "~~~ Hello from OSC server :) ~~~ ")
     osc_server.run()
+    print("Server is running")
