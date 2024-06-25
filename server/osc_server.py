@@ -72,7 +72,7 @@ class OSCServer(object):
             addr (str): Client address to send to
         """
         print('Got predict signal')
-        result_dict = self.predictor.predict(from_file='/Users/virgile/Desktop/input_buffer.wav')
+        result_dict = self.predictor.predict()
         # Keep only top 5 and send to /tag/ adress
         # result_dict = {k: v for k, v in sorted(result_dict.items(), key=lambda item: item[1], reverse=True)[:5]}
         # i=1
