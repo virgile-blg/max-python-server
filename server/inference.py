@@ -36,6 +36,7 @@ class Predictor(object):
             print(e)
         
     def predict(self, from_file:PosixPath=Path('mnt/Desktop/input_buffer.wav')):
+    def predict(self, from_file:PosixPath=Path('mnt/Desktop/input_buffer.wav')):
         # Load buffer
         input_buffer, _ = librosa.load(from_file, sr=16000, mono=True)
         
