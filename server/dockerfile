@@ -18,4 +18,5 @@ EXPOSE 8000/udp
 EXPOSE 8001/udp
 
 # CMD osc_server.py --model_folder models/shortres_mtg
-CMD ["sh", "-c", "python osc_server.py --model_folder ${model_folder}"]
+# CMD ["sh", "-c", "python osc_server.py --model_folder ${model_folder}"]
+CMD ["sh", "-c", "python osc_server.py"]
