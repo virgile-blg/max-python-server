@@ -1,5 +1,19 @@
 import torch
 import librosa
+from pathlib import Path, PosixPath
+
+genre_merge_dict = {
+    'Rock': ['rock','alternative', 'indie', 'alternative rock', 'classic rock', 'indie rock', 'Progressive rock'],
+    'Pop': ['pop', 'indie pop'],
+    'Jazz / Soul': ['jazz', 'soul'],
+    'Electro / Dance': ['electronic', 'dance', 'House'],
+    'Disco / Funk': ['funk', 'soul', 'dance', 'soul'],
+    'Hip Hop / Rnb': ['Hip-Hop', 'rnb'], 
+    'Ambient / Chillout' : ['chillout', 'easy listening', 'ambient', 'experimental'], 
+    'Blues': ['blues'], 
+    'Folk / Country': ['folk', 'country'], 
+    'Hard Rock / Metal': ['metal', 'hard rock', 'heavy metal', 'punk']
+}
 
 
 class Predictor(object):
@@ -21,7 +35,7 @@ class Predictor(object):
         except Exception as e:
             print(e)
         
-    def predict(self, from_file:str='/mnt/Desktop/input_buffer.wav'):
+    def predict(self, from_file:PosixPath=Path('mnt/Desktop/input_buffer.wav')):
         # Load buffer
         input_buffer, _ = librosa.load(from_file, sr=16000, mono=True)
         
@@ -39,5 +53,12 @@ class Predictor(object):
         result_dict = {}
         for i, cl in enumerate(self.classes):
             result_dict[cl] = round(float(out[0][i]), 3)
+            
+        # Merge genres results
+        merged_results = {}
+        for k, v in genre_merge_dict.items():
+            merged_results[k] = 0
+            for g in v:
+                merged_results[k] += round(result_dict[g] * 1/len(v), 3)
         
-        return result_dict
+        return merged_results
